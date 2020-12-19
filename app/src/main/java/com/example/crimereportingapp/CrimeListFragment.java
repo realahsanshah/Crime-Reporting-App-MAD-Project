@@ -16,21 +16,21 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
 
-    private class CrimeHolder extends RecyclerView.ViewHolder{
+    private class CrimeHolder extends RecyclerView.ViewHolder {
         private TextView titleTextView;
         private TextView dateTextView;
 
         private Crime mCrime;
 
-        public CrimeHolder(LayoutInflater inflater,ViewGroup parent){
-            super(inflater.inflate(R.layout.list_item_crime,parent,false));
+        public CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+            super(inflater.inflate(viewType, parent, false));
 
-            titleTextView=(TextView)itemView.findViewById(R.id.crime_item_title);
-            dateTextView=(TextView)itemView.findViewById(R.id.crime_item_date);
+            titleTextView = (TextView) itemView.findViewById(R.id.crime_item_title);
+            dateTextView = (TextView) itemView.findViewById(R.id.crime_item_date);
         }
 
-        public void bind(Crime crime){
-            this.mCrime=crime;
+        public void bind(Crime crime) {
+            this.mCrime = crime;
             titleTextView.setText(mCrime.getTitle());
             dateTextView.setText(mCrime.getDate().toString());
         }
@@ -48,18 +48,26 @@ public class CrimeListFragment extends Fragment {
         public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater=LayoutInflater.from(getActivity());
 
-            return new CrimeHolder(inflater,parent);
+            return new CrimeHolder(inflater, parent, viewType);
         }
 
         @Override
         public void onBindViewHolder(@NonNull CrimeHolder holder, int position) {
-            Crime crime=mCrimes.get(position);
+            Crime crime = mCrimes.get(position);
             holder.bind(crime);
         }
 
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        public int getItemViewType(int position) {
+            Crime crime = mCrimes.get(position);
+            if (!crime.isRequirePolice())
+                return R.layout.list_item_crime;
+            else
+                return R.layout.serious_list_item_crime;
         }
     }
 

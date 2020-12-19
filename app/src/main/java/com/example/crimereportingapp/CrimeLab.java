@@ -15,9 +15,10 @@ public class CrimeLab {
         crimes=new ArrayList<Crime>();
 
         for(int i=0;i<30;i++){
-            Crime c=new Crime();
-            c.setTitle("Crime #"+i);
-            c.setSolved(i%3==0);
+            Crime c = new Crime();
+            c.setTitle("Crime #" + i);
+            c.setSolved(i % 3 == 0);
+            c.setRequirePolice(i % 5 == 0);
             crimes.add(c);
         }
 
