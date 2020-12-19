@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class CrimeFragement extends Fragment {
+public class CrimeFragment extends Fragment {
 
     private Button dateButton;
     private CheckBox solvedCheckBox;
@@ -35,7 +35,7 @@ public class CrimeFragement extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        super.onCreateView(inflater, container, savedInstanceState);
 
-        View view=inflater.inflate(R.layout.fragement_crime,container,false);
+        View view=inflater.inflate(R.layout.fragment_crime,container,false);
 
         dateButton=(Button)view.findViewById(R.id.crime_button);
         dateButton.setText(crime.getDate().toString());
