@@ -32,7 +32,7 @@ public class CrimeFragement extends Fragment {
 
         dateButton=(Button)view.findViewById(R.id.crime_button);
         solvedCheckBox=(CheckBox)view.findViewById(R.id.crime_solved);
-        crimeTitleText=(EditText)view.findViewById(R.id.crime_title); 
+        crimeTitleText=(EditText)view.findViewById(R.id.crime_title);
 
         return view;
 
