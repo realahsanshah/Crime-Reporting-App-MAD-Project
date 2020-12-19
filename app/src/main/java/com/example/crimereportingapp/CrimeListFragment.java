@@ -13,6 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CrimeListFragment extends Fragment {
 
+    private class CrimeHolder extends RecyclerView.ViewHolder{
+        public CrimeHolder(LayoutInflater inflater,ViewGroup parent){
+            super(inflater.inflate(R.layout.fragment_crime_list,parent,false));
+
+        }
+    }
+
+
     private RecyclerView crimesRecyclerView;
 
     @Override
