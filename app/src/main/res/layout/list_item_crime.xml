@@ -2,15 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="6dp"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CrimeTitle"
-        android:id="@+id/crime_title"
+        android:id="@+id/crime_item_title"
         android:textSize="18sp"
         />
 
@@ -18,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CrimeTitle"
-        android:id="@+id/crime_date"
+        android:id="@+id/crime_item_date"
         android:textSize="14sp"
         />
 
