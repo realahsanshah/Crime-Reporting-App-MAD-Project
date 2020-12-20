@@ -14,10 +14,10 @@ public class CrimeLab {
     private CrimeLab(Context context){
         crimes=new ArrayList<Crime>();
 
-        for(int i=0;i<30;i++){
+        for (int i = 0; i < 100; i++) {
             Crime c = new Crime();
-            c.setTitle("Crime #" + i);
-            c.setSolved(i % 3 == 0);
+            c.setTitle("Crime #" + (i + 1));
+            c.setSolved(i % 6 == 0);
             c.setRequirePolice(i % 5 == 0);
             crimes.add(c);
         }

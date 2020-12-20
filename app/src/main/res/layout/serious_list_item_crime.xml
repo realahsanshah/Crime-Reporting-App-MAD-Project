@@ -2,28 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="6dp">
 
-    <TextView
-        android:id="@+id/crime_item_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CrimeTitle"
-        android:textSize="18sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/crime_item_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CrimeTitle"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/crime_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CrimeTitle"
+            android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/contact_police_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ContactPolice"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/crime_item_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CrimeTitle"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/contact_police_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ContactPolice"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/is_solved_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
 </LinearLayout>

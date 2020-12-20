@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder {
         private TextView titleTextView;
         private TextView dateTextView;
+        private ImageView imageView;
+
 
         private Crime mCrime;
 
@@ -27,12 +30,16 @@ public class CrimeListFragment extends Fragment {
 
             titleTextView = (TextView) itemView.findViewById(R.id.crime_item_title);
             dateTextView = (TextView) itemView.findViewById(R.id.crime_item_date);
+            imageView = (ImageView) itemView.findViewById(R.id.is_solved_image);
         }
 
         public void bind(Crime crime) {
             this.mCrime = crime;
             titleTextView.setText(mCrime.getTitle());
             dateTextView.setText(mCrime.getDate().toString());
+            if (mCrime.isSolved()) {
+                imageView.setImageResource(R.drawable.ic_solved);
+            }
         }
     }
 
@@ -64,10 +71,10 @@ public class CrimeListFragment extends Fragment {
 
         public int getItemViewType(int position) {
             Crime crime = mCrimes.get(position);
-            if (!crime.isRequirePolice())
-                return R.layout.list_item_crime;
-            else
+            if (crime.isRequirePolice() && !crime.isSolved())
                 return R.layout.serious_list_item_crime;
+            else
+                return R.layout.list_item_crime;
         }
     }
 
