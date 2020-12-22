@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,30 +18,18 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
 
-    private class CrimeHolder extends RecyclerView.ViewHolder {
-        private TextView titleTextView;
-        private TextView dateTextView;
-        private ImageView imageView;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
 
+        crimesRecyclerView = view.findViewById(R.id.crime_recycler_view);
+        crimesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        private Crime mCrime;
+        updateUI();
 
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
-            super(inflater.inflate(viewType, parent, false));
+        return view;
 
-            titleTextView = (TextView) itemView.findViewById(R.id.crime_item_title);
-            dateTextView = (TextView) itemView.findViewById(R.id.crime_item_date);
-            imageView = (ImageView) itemView.findViewById(R.id.is_solved_image);
-        }
-
-        public void bind(Crime crime) {
-            this.mCrime = crime;
-            titleTextView.setText(mCrime.getTitle());
-            dateTextView.setText(mCrime.getDate().toString());
-            if (mCrime.isSolved()) {
-                imageView.setImageResource(R.drawable.ic_solved);
-            }
-        }
     }
 
     public class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
@@ -87,25 +76,40 @@ public class CrimeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView titleTextView;
+        private TextView dateTextView;
+        private ImageView imageView;
 
-        crimesRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
-        crimesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        updateUI();
+        private Crime mCrime;
 
-        return view;
+        public CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+            super(inflater.inflate(viewType, parent, false));
 
+            titleTextView = itemView.findViewById(R.id.crime_item_title);
+            dateTextView = itemView.findViewById(R.id.crime_item_date);
+            imageView = itemView.findViewById(R.id.is_solved_image);
+        }
+
+        public void bind(Crime crime) {
+            this.mCrime = crime;
+            titleTextView.setText(mCrime.getTitle());
+            dateTextView.setText(mCrime.getDate().toString());
+            imageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), mCrime.getTitle(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void updateUI() {
-        CrimeLab crimeLab=CrimeLab.get(getActivity());
-        List<Crime> crimes=crimeLab.getCrimes();
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        List<Crime> crimes = crimeLab.getCrimes();
 
-        crimeAdapter=new CrimeAdapter(crimes);
+        crimeAdapter = new CrimeAdapter(crimes);
 
         crimesRecyclerView.setAdapter(crimeAdapter);
     }

@@ -12,12 +12,12 @@ public class CrimeLab {
     List<Crime> crimes;
 
     private CrimeLab(Context context){
-        crimes=new ArrayList<Crime>();
+        crimes = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             Crime c = new Crime();
             c.setTitle("Crime #" + (i + 1));
-            c.setSolved(i % 6 == 0);
+            c.setSolved(i % 3 == 0);
             c.setRequirePolice(i % 5 == 0);
             crimes.add(c);
         }
