@@ -36,16 +36,21 @@
         android:layout_height="wrap_content"
         android:text="Add Crime"
         android:id="@+id/crime_button"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/crime_solved"
         android:text="Solved"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp" />
 
+    <CheckBox
+        android:id="@+id/police_required"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Police Required"
+        android:textSize="16sp" />
 
 
 </LinearLayout>

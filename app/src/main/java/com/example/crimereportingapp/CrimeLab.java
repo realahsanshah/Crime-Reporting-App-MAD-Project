@@ -1,6 +1,7 @@
 package com.example.crimereportingapp;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,9 @@ public class CrimeLab {
     }
 
     public Crime getCrime(UUID id){
+        Log.i("id", id.toString());
         for(Crime crime:crimes){
-            if(crime.getId()==id){
+            if (crime.getId().equals(id)) {
                 return crime;
             }
         }

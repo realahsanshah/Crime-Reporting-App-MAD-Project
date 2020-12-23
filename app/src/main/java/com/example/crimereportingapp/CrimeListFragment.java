@@ -1,6 +1,8 @@
 package com.example.crimereportingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +92,8 @@ public class CrimeListFragment extends Fragment {
             titleTextView = itemView.findViewById(R.id.crime_item_title);
             dateTextView = itemView.findViewById(R.id.crime_item_date);
             imageView = itemView.findViewById(R.id.is_solved_image);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Crime crime) {
@@ -99,9 +103,14 @@ public class CrimeListFragment extends Fragment {
             imageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
         }
 
+
         @Override
-        public void onClick(View view) {
+        public void onClick(View v) {
+            Log.i("onClick", mCrime.getId().toString());
             Toast.makeText(getActivity(), mCrime.getTitle(), Toast.LENGTH_LONG).show();
+
+            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            startActivity(intent);
         }
     }
 
