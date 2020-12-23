@@ -3,7 +3,6 @@ package com.example.crimereportingapp;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +25,26 @@ public class CrimeFragment extends Fragment {
     private EditText crimeTitleText;
     private Crime crime;
 
+    public static final String ARG_CRIME_ID = "crime_id";
+
+
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
 
         crime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        Log.i("crime", String.valueOf(crime == null));
     }
 
     @Nullable
@@ -54,6 +65,11 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 crime.setSolved(isChecked);
+                if (crime.isSolved()) {
+                    policeRequiredCheckBox.setChecked(false);
+                    policeRequiredCheckBox.setVisibility(View.GONE);
+                } else
+                    policeRequiredCheckBox.setVisibility(View.VISIBLE);
             }
         });
         if (crime.isSolved())
