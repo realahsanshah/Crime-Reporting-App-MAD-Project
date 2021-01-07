@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Crime Reporting App</string>
     <string name="date_picker_title">Date of Crime</string>
+    <string name="new_crime">New Crime</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%d Crimes</string>
 </resources>

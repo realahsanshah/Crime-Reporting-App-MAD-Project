@@ -26,18 +26,22 @@ public class CrimeLab {
     }
 
     public static CrimeLab get(Context context) {
-        if(crimeLab==null)
-            crimeLab=new CrimeLab(context);
+        if (crimeLab == null)
+            crimeLab = new CrimeLab(context);
         return crimeLab;
+    }
+
+    public void addCrime(Crime c) {
+        crimes.add(c);
     }
 
     public List<Crime> getCrimes() {
         return crimes;
     }
 
-    public Crime getCrime(UUID id){
+    public Crime getCrime(UUID id) {
         Log.i("id", id.toString());
-        for(Crime crime:crimes){
+        for (Crime crime : crimes) {
             if (crime.getId().equals(id)) {
                 return crime;
             }
