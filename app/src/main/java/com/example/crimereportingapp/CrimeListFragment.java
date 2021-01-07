@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CrimeListFragment extends Fragment {
 
@@ -76,10 +77,14 @@ public class CrimeListFragment extends Fragment {
                 return true;
 
             case R.id.show_subtitle:
-                mSubtitleVisible = !mSubtitleVisible;
-                getActivity().invalidateOptionsMenu();
-                updateSubtitle();
-                return true;
+                try {
+                    mSubtitleVisible = !mSubtitleVisible;
+                    Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+                    updateSubtitle();
+                    return true;
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -102,6 +107,7 @@ public class CrimeListFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onResume() {
