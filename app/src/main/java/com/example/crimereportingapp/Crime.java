@@ -10,6 +10,7 @@ public class Crime {
     private boolean solved;
     private boolean requirePolice;
 
+
     public Crime() {
         id=UUID.randomUUID();
         date=new Date();
@@ -45,5 +46,9 @@ public class Crime {
 
     public void setRequirePolice(boolean requirePolice) {
         this.requirePolice = requirePolice;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

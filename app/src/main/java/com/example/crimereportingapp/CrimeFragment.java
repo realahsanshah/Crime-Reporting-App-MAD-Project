@@ -1,5 +1,7 @@
 package com.example.crimereportingapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +16,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
@@ -26,6 +30,8 @@ public class CrimeFragment extends Fragment {
     private Crime crime;
 
     public static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "dialog_date";
+    private static final int REQ_DATE = 0;
 
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -56,7 +62,19 @@ public class CrimeFragment extends Fragment {
 
         dateButton = view.findViewById(R.id.crime_button);
         dateButton.setText(crime.getDate().toString());
-        dateButton.setEnabled(false);
+//        dateButton.setEnabled(false);
+
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(crime.getDate());
+                datePickerFragment.setTargetFragment(CrimeFragment.this, REQ_DATE);
+                datePickerFragment.show(fragmentManager, DIALOG_DATE);
+            }
+        });
+
         solvedCheckBox = view.findViewById(R.id.crime_solved);
         solvedCheckBox.setChecked(crime.isSolved());
         policeRequiredCheckBox = view.findViewById(R.id.police_required);
@@ -102,5 +120,17 @@ public class CrimeFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+        if (requestCode == REQ_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            crime.setDate(date);
+            dateButton.setText(crime.getDate().toString());
+        }
     }
 }
