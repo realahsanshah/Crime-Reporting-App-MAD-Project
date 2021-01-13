@@ -1,4 +1,4 @@
-package com.example.crimereportingapp;
+package com.example.crimereportingapp.database;
 
 public class CrimeDBSchema {
 
