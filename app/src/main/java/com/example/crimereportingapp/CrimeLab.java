@@ -68,6 +68,7 @@ public class CrimeLab {
                 new String[]{uuid});
     }
 
+
     public CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(CrimeDBSchema.CrimeTable.NAME,
                 null,
@@ -121,6 +122,13 @@ public class CrimeLab {
         }
 
         return null;
+    }
+
+    public void deleteCrime(UUID uuid) {
+        String whereClause = CrimeDBSchema.CrimeTable.Columns.UUID + "= ?";
+        String[] whereArgs = new String[]{uuid.toString()};
+
+        mDatabase.delete(CrimeDBSchema.CrimeTable.NAME, whereClause, whereArgs);
     }
 
 

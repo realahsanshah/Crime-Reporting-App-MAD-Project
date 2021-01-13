@@ -1,6 +1,8 @@
 package com.example.crimereportingapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +30,7 @@ public class CrimeFragment extends Fragment {
     private CheckBox policeRequiredCheckBox;
     private EditText crimeTitleText;
     private Crime crime;
+    private Button deleteButton;
 
     public static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "dialog_date";
@@ -70,6 +73,8 @@ public class CrimeFragment extends Fragment {
         dateButton = view.findViewById(R.id.crime_button);
         dateButton.setText(crime.getDate().toString());
 //        dateButton.setEnabled(false);
+
+        deleteButton = view.findViewById(R.id.delete_button);
 
 
         dateButton.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +127,26 @@ public class CrimeFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder confirmation = new AlertDialog.Builder(getActivity())
+                        .setTitle("Confirm Deletion")
+                        .setMessage("Do you really want to delete this crime?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CrimeLab.get(getActivity()).deleteCrime(crime.getId());
+                                getFragmentManager().popBackStack();
+                                deleteButton.setEnabled(false);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null);
+                confirmation.show();
             }
         });
 

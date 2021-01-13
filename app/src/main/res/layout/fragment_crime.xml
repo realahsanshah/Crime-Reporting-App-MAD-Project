@@ -52,5 +52,15 @@
         android:text="Police Required"
         android:textSize="16sp" />
 
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="#f70000"
+
+        android:text="Delete this Crime"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
 
 </LinearLayout>
