@@ -122,8 +122,11 @@ public class CrimeListFragment extends Fragment {
         if (crimeAdapter == null) {
             crimeAdapter = new CrimeAdapter(crimes);
             crimesRecyclerView.setAdapter(crimeAdapter);
-        } else
+        } else {
+            crimeAdapter.setCrimes(crimes);
             crimeAdapter.notifyDataSetChanged();
+
+        }
     }
 
 
@@ -136,9 +139,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView titleTextView;
-        private TextView dateTextView;
-        private ImageView imageView;
+        private final TextView titleTextView;
+        private final TextView dateTextView;
+        private final ImageView imageView;
 
 
         private Crime mCrime;
@@ -202,6 +205,10 @@ public class CrimeListFragment extends Fragment {
                 return R.layout.serious_list_item_crime;
             else
                 return R.layout.list_item_crime;
+        }
+
+        public void setCrimes(List<Crime> crimes) {
+            this.mCrimes = crimes;
         }
     }
 }

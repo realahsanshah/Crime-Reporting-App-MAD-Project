@@ -54,14 +54,16 @@ public class CrimeLab {
     }
 
     public void addCrime(Crime c) {
-        mDatabase.insert(CrimeDBSchema.CrimeTable.NAME, null, getContentValues(c));
+        ContentValues values = getContentValues(c);
+        mDatabase.insert(CrimeDBSchema.CrimeTable.NAME, null, values);
 //        crimes.add(c);
     }
 
     public void updateCrime(Crime crime) {
         String uuid = crime.getId().toString();
+        ContentValues values = getContentValues(crime);
         mDatabase.update(CrimeDBSchema.CrimeTable.NAME,
-                getContentValues(crime),
+                values,
                 CrimeDBSchema.CrimeTable.Columns.UUID + "= ?",
                 new String[]{uuid});
     }
@@ -87,6 +89,7 @@ public class CrimeLab {
 
             while (!cursor.isAfterLast()) {
                 crimes.add(cursor.getCrime());
+                cursor.moveToNext();
             }
         } catch (Exception e) {
             e.printStackTrace();
