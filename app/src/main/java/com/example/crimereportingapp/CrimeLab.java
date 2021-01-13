@@ -2,9 +2,11 @@ package com.example.crimereportingapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.crimereportingapp.database.CrimeBaseHelper;
+import com.example.crimereportingapp.database.CrimeCursorWrapper;
 import com.example.crimereportingapp.database.CrimeDBSchema;
 
 import java.util.ArrayList;
@@ -60,22 +62,61 @@ public class CrimeLab {
         String uuid = crime.getId().toString();
         mDatabase.update(CrimeDBSchema.CrimeTable.NAME,
                 getContentValues(crime),
-                CrimeDBSchema.CrimeTable.Columns.UUID + "=?",
+                CrimeDBSchema.CrimeTable.Columns.UUID + "= ?",
                 new String[]{uuid});
+    }
+
+    public CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(CrimeDBSchema.CrimeTable.NAME,
+                null,
+                whereClause, whereArgs,
+                null, null, null);
+
+        return new CrimeCursorWrapper(cursor);
+
     }
 
     public List<Crime> getCrimes() {
 //        return crimes;
-        return new ArrayList<>();
+        List<Crime> crimes = new ArrayList<>();
+
+        CrimeCursorWrapper cursor = queryCrimes(null, null);
+
+        try {
+            cursor.moveToFirst();
+
+            while (!cursor.isAfterLast()) {
+                crimes.add(cursor.getCrime());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+        return crimes;
     }
 
     public Crime getCrime(UUID id) {
-//        Log.i("id", id.toString());
-//        for (Crime crime : crimes) {
-//            if (crime.getId().equals(id)) {
-//                return crime;
-//            }
-//        }
+
+        String whereClause = CrimeDBSchema.CrimeTable.Columns.UUID + "= ?";
+        String[] whereArgs = new String[]{id.toString()};
+
+        CrimeCursorWrapper cursor = queryCrimes(whereClause, whereArgs);
+
+        try {
+            if (cursor.getCount() == 0)
+                return null;
+
+            cursor.moveToFirst();
+            return cursor.getCrime();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            cursor.close();
+        }
+
         return null;
     }
 
